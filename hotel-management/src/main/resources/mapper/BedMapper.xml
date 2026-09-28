@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stirwick.hotelmanagement.mapper.BedMapper">
+    <!-- SQL1：空闲床位 -->
+    <select id="selectFreeBed" resultType="com.stirwick.hotelmanagement.vo.bed.BedAvailableVO">
+        SELECT
+        r.id AS roomId,
+        r.room_name AS roomName,
+        r.room_desc AS roomDesc,
+        t.type_name AS typeName,
+        b.id AS bedId,
+        b.bed_name AS bedName
+        FROM bed b
+        LEFT JOIN room r ON b.room_id = r.id
+        LEFT JOIN room_type t ON r.room_type_id = t.id
+        WHERE
+        b.id NOT IN (
+        SELECT DISTINCT bed_id
+        FROM bed_student_rel subRel
+        WHERE subRel.check_in_time &lt; #{endDate}
+        AND subRel.estimate_check_out_time &gt; #{startDate}
+        )
+        <if test="studentGender != null and studentGender != ''">
+            AND NOT EXISTS (
+            SELECT 1
+            FROM bed b2
+            LEFT JOIN bed_student_rel rel2
+            ON b2.id = rel2.bed_id
+            AND rel2.check_in_time &lt;= #{endDate}
+            AND rel2.estimate_check_out_time &gt;= #{startDate}
+            LEFT JOIN student_info stu2 ON rel2.student_id = stu2.id
+            WHERE b2.room_id = b.room_id
+            AND stu2.student_gender IS NOT NULL
+            AND stu2.student_gender != #{studentGender}
+            )
+        </if>
+    </select>
+
+    <!-- SQL2：只查指定房间，目标时间段【占用床位】 -->
+    <select id="selectOccupiedBedByRoomIds" resultType="com.stirwick.hotelmanagement.vo.bed.BedAvailableVO">
+        SELECT
+        r.id AS roomId,
+        r.room_name AS roomName,
+        r.room_desc AS roomDesc,
+        t.type_name AS typeName,
+        b.id AS bedId,
+        b.bed_name AS bedName,
+        '使用中' AS bedStatus,
+        s.student_name AS studentName
+        FROM bed b
+        LEFT JOIN room r ON b.room_id = r.id
+        LEFT JOIN room_type t ON r.room_type_id = t.id
+        INNER JOIN bed_student_rel rel
+        ON b.id = rel.bed_id
+        AND rel.check_in_time &lt;= #{endDate}
+        AND rel.estimate_check_out_time &gt;= #{startDate}
+        LEFT JOIN student_info s ON rel.student_id = s.id
+        WHERE r.id IN
+        <foreach collection="roomIdList" open="(" separator="," close=")" item="roomId">
+            #{roomId}
+        </foreach>
+    </select>
+
+    <select id="selectCountByIds" resultType="java.lang.Long">
+        SELECT COUNT(DISTINCT id) FROM bed WHERE id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+
+</mapper>

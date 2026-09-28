@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stirwick.hotelmanagement.mapper.StudentInfoMapper">
+    <select id="countStudentByClassIdList" resultType="java.util.Map">
+        SELECT class_id, COUNT(id) AS cnt
+        FROM student_info
+        WHERE class_id IN
+        <foreach collection="classIdList" open="(" separator="," close=")" item="cid">
+            #{cid}
+        </foreach>
+        GROUP BY class_id
+    </select>
+
+    <select id="selectAdjustStudentList" resultType="java.util.Map">
+        SELECT
+        s.id as student_id,
+        s.student_name,
+        s.student_gender,
+        c.class_name
+        FROM student_info s
+        LEFT JOIN class_info c ON s.class_id = c.id
+        <where>
+            <if test="batchId != null">
+                s.batch_id = #{batchId}
+            </if>
+        </where>
+        ORDER BY s.id DESC
+    </select>
+
+    <select id="selectStudentPage" resultType="com.stirwick.hotelmanagement.vo.student.StudentPageVO">
+        SELECT
+        s.id,
+        s.student_name,
+        s.batch_id,
+        s.student_gender,
+        b.batch_name,
+        c.class_name,
+        s.student_phone,
+        s.id_card,
+        s.student_age,
+        s.emergency_contact_name,
+        s.emergency_contact_phone,
+        s.class_id,
+        r.id AS room_id,
+        r.room_name,
+        bed.id AS bed_id,
+        bed.bed_name,
+        rel.estimate_check_out_time AS estimateLeaveTime,
+        CASE
+        WHEN rel.id IS NOT NULL THEN '入住中'
+        ELSE '未入住'
+        END AS check_in_status
+        FROM student_info s
+        LEFT JOIN batch_info b ON s.batch_id = b.batch_id
+        LEFT JOIN class_info c ON s.class_id = c.id
+        -- 左连接：只匹配未办理退宿的入住记录
+        LEFT JOIN bed_student_rel rel
+        ON s.id = rel.student_id
+        AND rel.check_out_time IS NULL
+        LEFT JOIN bed bed ON rel.bed_id = bed.id
+        LEFT JOIN room r ON bed.room_id = r.id
+        <where>
+            <if test="dto.studentName != null and dto.studentName != ''">
+                s.student_name LIKE CONCAT('%', #{dto.studentName}, '%')
+            </if>
+            <if test="dto.batchId != null">
+                s.batch_id = #{dto.batchId}
+            </if>
+            <if test="dto.checkInStatus != null and dto.checkInStatus != ''">
+                <choose>
+                    <when test="dto.checkInStatus == '入住中'">
+                        rel.id IS NOT NULL
+                    </when>
+                    <when test="dto.checkInStatus == '未入住'">
+                        rel.id IS NULL
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCountByIds" resultType="java.lang.Long">
+        SELECT COUNT(DISTINCT id) FROM student_info WHERE id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+</mapper>

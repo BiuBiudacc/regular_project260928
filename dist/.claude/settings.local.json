@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp \"登录接口.jpg\" \"/tmp/login_api.png\")",
+      "Bash(cp \"登录接口.jpg\" \"C:/Users/Administrator/AppData/Local/Temp/login_api.png\")",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "WebFetch(domain:127.0.0.1)",
+      "Bash(node -e \"const i=require\\('@element-plus/icons-vue'\\); console.log\\('Collection:', !!i.Collection, '| Notebook:', !!i.Notebook, '| School:', !!i.School, '| Reading:', !!i.Reading\\)\")",
+      "Bash(npx vite *)",
+      "Bash(curl -s -m 10 \"http://localhost:16379/v3/api-docs\" -o /tmp/api-docs.json)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -m 10 \"http://localhost:16379/v3/api-docs\" -o \"_api-docs2.json\")",
+      "Bash(rm -f \"_api-docs2.json\")",
+      "Bash(curl -s -m 10 \"http://localhost:16379/v3/api-docs\" -o \"_api-docs3.json\")",
+      "Bash(rm -f \"_api-docs3.json\")",
+      "Bash(curl -s -m 10 -X POST \"http://localhost:16379/api/user/login\" -H \"Content-Type: application/json\" -d '{\"username\":\"admin\",\"password\":\"123456\"}')",
+      "Bash(node -e \"const i=require\\('@element-plus/icons-vue'\\); ['Key','HomeFilled','Checked','Promotion','Location','Bell','Suites'].forEach\\(k=>console.log\\(k+':', !!i[k]\\)\\)\")"
+    ]
+  }
+}

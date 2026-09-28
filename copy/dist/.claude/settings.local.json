@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp \"登录接口.jpg\" \"/tmp/login_api.png\")",
+      "Bash(cp \"登录接口.jpg\" \"C:/Users/Administrator/AppData/Local/Temp/login_api.png\")",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "WebFetch(domain:127.0.0.1)",
+      "Bash(node -e \"const i=require\\('@element-plus/icons-vue'\\); console.log\\('Collection:', !!i.Collection, '| Notebook:', !!i.Notebook, '| School:', !!i.School, '| Reading:', !!i.Reading\\)\")",
+      "Bash(npx vite *)"
+    ]
+  }
+}

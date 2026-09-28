@@ -1,0 +1,85 @@
+接口地址:http://localhost:16379/api/batch/page?pageNum=1&pageSize=5
+注意:请求头需要携带token
+返回值:
+{
+    "code": 200,
+    "msg": "操作成功",
+    "data": {
+        "records": [
+            {
+                "batchId": 1,
+                "batchName": "2026秋季第一批次",
+                "batchDesc": "秋季入学第一批学员",
+                "estimateStudentNum": 120,
+                "estimateTeacherNum": 12,
+                "chargeTeacher": "王老师",
+                "chargePhone": "13800001101",
+                "batchStartTime": "2026-09-01T08:00:00",
+                "batchEndTime": "2026-12-20T17:00:00",
+                "createTime": "2026-09-01T10:20:00",
+                "updateTime": "2026-09-01T10:20:00"
+            },
+            {
+                "batchId": 2,
+                "batchName": "2026秋季第二批次",
+                "batchDesc": "秋季入学第二批学员",
+                "estimateStudentNum": 95,
+                "estimateTeacherNum": 9,
+                "chargeTeacher": "李老师",
+                "chargePhone": "13800001102",
+                "batchStartTime": "2026-09-10T08:00:00",
+                "batchEndTime": "2026-12-25T17:00:00",
+                "createTime": "2026-09-02T10:20:00",
+                "updateTime": "2026-09-02T10:20:00"
+            },
+            {
+                "batchId": 3,
+                "batchName": "2026冬季预备批次",
+                "batchDesc": "冬季预科班",
+                "estimateStudentNum": 60,
+                "estimateTeacherNum": 6,
+                "chargeTeacher": "张老师",
+                "chargePhone": "13800001103",
+                "batchStartTime": "2026-11-01T08:00:00",
+                "batchEndTime": "2027-02-10T17:00:00",
+                "createTime": "2026-09-02T14:10:00",
+                "updateTime": "2026-09-02T14:10:00"
+            },
+            {
+                "batchId": 4,
+                "batchName": "2027春季A班",
+                "batchDesc": "春季A教学批次",
+                "estimateStudentNum": 150,
+                "estimateTeacherNum": 15,
+                "chargeTeacher": "刘老师",
+                "chargePhone": "13800001104",
+                "batchStartTime": "2027-02-15T08:00:00",
+                "batchEndTime": "2027-06-30T17:00:00",
+                "createTime": "2026-09-03T09:10:00",
+                "updateTime": "2026-09-03T09:10:00"
+            },
+            {
+                "batchId": 5,
+                "batchName": "2027春季B班",
+                "batchDesc": "春季B教学批次",
+                "estimateStudentNum": 110,
+                "estimateTeacherNum": 11,
+                "chargeTeacher": "赵老师",
+                "chargePhone": "13800001105",
+                "batchStartTime": "2027-02-20T08:00:00",
+                "batchEndTime": "2027-07-05T17:00:00",
+                "createTime": "2026-09-03T09:15:00",
+                "updateTime": "2026-09-03T09:15:00"
+            }
+        ],
+        "total": 8,
+        "size": 5,
+        "current": 1,
+        "orders": [],
+        "optimizeCountSql": true,
+        "searchCount": true,
+        "maxLimit": null,
+        "countId": null,
+        "pages": 2
+    }
+}

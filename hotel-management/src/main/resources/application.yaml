@@ -1,0 +1,61 @@
+#服务绑定端口
+server:
+  port: 16379
+
+spring:
+# 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://127.0.0.1:3306/stirwick_hotel?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai"
+    username: root
+    password: 181023
+mvc:
+  pathmatch:
+    matching-strategy: ant_path_matcher
+
+# MyBatis‑Plus配置
+mybatis-plus:
+# mapper xml文件位置
+  mapper-locations: classpath:mapper/**/*.xml
+  # 实体类别名包，xml中写实体类名字不用写全限定名
+  type-aliases-package: com.stirwick.hotelmanagement.entity
+  configuration:
+    # 打印sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 开启下划线转驼峰映射（数据库user_name → userName）
+    map-underscore-to-camel-case: true
+
+logging:
+  # 日志级别配置
+  level:
+    # root：全局根日志级别，所有包默认继承这个级别
+    root: info
+    # 自己项目业务包：开发环境debug，可以看到更多调试信息；生产改成info
+    com.stirwick.hotelmanagement: debug
+    # mapper包设置debug：打印MyBatis执行SQL语句（开发用，生产注释掉）
+    com.stirwick.hotelmanagement.mapper: debug
+  # 日志文件输出配置
+  file:
+    # name：日志文件路径+文件名，相对路径！项目根目录下生成 logs文件夹
+    name: logs/hotel-management.log
+  pattern:
+    # 控制台输出日志格式：时间 线程 日志级别 类名 消息
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+
+jwt:
+  secret: stirwick-hotel-2026-very-long-secret-key-abcdef123456
+  expire-minutes: 120
+
+springdoc:
+  api-docs:
+    enabled: true # 是否开启生成openapi json
+  swagger-ui:
+    enabled: true
+  packages-to-scan: com.stirwick.hotelmanagement
+knife4j:
+  enable: true
+  production: false
+  setting:
+    language: zh_cn
+  basic:
+    enable: false
